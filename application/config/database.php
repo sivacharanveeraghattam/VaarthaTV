@@ -75,10 +75,10 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'localhost',
-	'username' => 'root',
-	'password' => '',
-	'database' => 'vaartha_tv',
+	'hostname' => 'sql106.infinityfree.com',
+	'username' => 'if0_34512463',
+	'password' => 'xxBp4AoeG0vnE0',
+	'database' => 'if0_34512463_vaartha_tv',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
