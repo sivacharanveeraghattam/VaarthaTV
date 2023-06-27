@@ -1,100 +1,152 @@
-<?php
-defined('BASEPATH') OR exit('No direct script access allowed');
-?><!DOCTYPE html>
+
+<!DOCTYPE html>
 <html lang="en">
-<head>
-	<meta charset="utf-8">
-	<title>Welcome to CodeIgniter</title>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>News Portal </title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="<?php echo base_url('assets/css/styles.css');?>" rel="stylesheet" />
+    </head>
+    <body>
+        <!-- Responsive navbar-->
+   <?php include APPPATH.'views/includes/header.php';?>
+        <!-- Page header with logo and tagline-->
+        <header class="py-5 bg-light border-bottom mb-4">
+           
+        </header>
+        <!-- Page content-->
+        <div class="container">
+            <div class="row">
+                <!-- Blog entries-->
+                <div class="col-lg-8">
+                    <!-- Featured blog post-->
+					<?php
+					if(count($viewdetails)):
+                  $cnt=1;
+                  foreach($viewdetails as $row):
+                  ?>
+                    <div class="card mb-4">
+                        <a href="#!"><img  width="100%" src="<?php echo base_url('uploads/files/'. $row->Upload_Image);?>" alt="..." height="400" /></a>
+						
+                        <div class="card-body">
+							<?php 
+							$input= $row->create_date;
+							$date = strtotime($input);
+							
+							?>
+                            <div class="small text-muted"><?php echo date('M d, Y', $date);?></div>
+                            <h2 class="card-title"><?php  echo $row->newtitle;?></h2>
+                            <p class="card-text"><?php echo substr($row->Description,0,200);?></p>
+                            <?php echo anchor("Welcome/post/{$row->id}",'Read more →'); ?>
+                        </div>
+                    </div>
+					<?php 
+                    $cnt=$cnt+1;
+                    endforeach;
+                    else:
+                    ?>
+                    <tr>
+                    <td colspan="5" style="color:red; text-align:center">No Record found</td>
+                    </tr>
+                    <?php endif;?>
+					
+                    <!-- Nested row for non-featured blog posts-->
+                    
+                    <!-- Pagination-->
+                    <nav aria-label="Pagination">
+                        <hr class="my-0" />
+                      <p><?php echo $links; ?></p>
+                    </nav>
+                </div>
+                <!-- Side widgets-->
+                <div class="col-lg-4">
+                    <!-- Search widget-->
+                    <div class="card mb-4">
+                        <div class="card-header">Search</div>
+                        <div class="card-body">
+                        <?php echo form_open('Search/index',['class'=>'php-email-form']);?>
+                        
+                            <div class="input-group">
+                                <input class="form-control" type="text" name="searchdata" id="searchdata" placeholder="Enter search term..."
+                                 aria-label="Enter search term..." aria-describedby="button-search" />
+                                 <input type="submit" name="submit" id="submit" class="btn btn-primary" value="Go!">
+                                <!-- <button class="btn btn-primary" id="button-search" type="button">Go!</button> -->
+                            </div>
+                    </form>
+                        </div>
+                    </div>
+                    <!-- Categories widget-->
+                    <div class="card mb-4">
+                        <div class="card-header">Categories</div>
+                        <div class="card-body">
+                            <div class="row">
+                            <?php
+                  if(count($category)):
+                  $cnt=1;
+                  foreach($category as $row):
+                  ?>
+                                <div class="col-sm-6">
+                                    <ul class="list-unstyled mb-0">
+                                        <?php $cat= $row->name;?>
+                                        <li> <?php echo anchor("Category/index/{$row->id}",$cat); ?></li>
+                                    </ul>
+                                </div>
+                                <?php 
+                    $cnt=$cnt+1;
+                    endforeach;
+                    else:
+                    ?>
+                    <tr>
+                    <td colspan="5" style="color:red; text-align:center">No Record found</td>
+                    </tr>
+                    <?php endif;?>
+  
+                            </div>
+                        </div>
+                    </div>
 
-	<style type="text/css">
+                  
+                                 <!-- Side widget-->
+                    <div class="card mb-4">
+                        <div class="card-header">Recent News</div>
 
-	::selection { background-color: #E13300; color: white; }
-	::-moz-selection { background-color: #E13300; color: white; }
+                        <div class="card-body">
+                        <?php
+					if(count($resentlypost)):
+                  $cnt=1;
+                  foreach($resentlypost as $row):
+                  ?>
+                            <ul>
+                                
+                                <?php  $shiv= $row->newtitle;?>
 
-	body {
-		background-color: #fff;
-		margin: 40px;
-		font: 13px/20px normal Helvetica, Arial, sans-serif;
-		color: #4F5155;
-	}
-
-	a {
-		color: #003399;
-		background-color: transparent;
-		font-weight: normal;
-		text-decoration: none;
-	}
-
-	a:hover {
-		color: #97310e;
-	}
-
-	h1 {
-		color: #444;
-		background-color: transparent;
-		border-bottom: 1px solid #D0D0D0;
-		font-size: 19px;
-		font-weight: normal;
-		margin: 0 0 14px 0;
-		padding: 14px 15px 10px 15px;
-	}
-
-	code {
-		font-family: Consolas, Monaco, Courier New, Courier, monospace;
-		font-size: 12px;
-		background-color: #f9f9f9;
-		border: 1px solid #D0D0D0;
-		color: #002166;
-		display: block;
-		margin: 14px 0 14px 0;
-		padding: 12px 10px 12px 10px;
-	}
-
-	#body {
-		margin: 0 15px 0 15px;
-		min-height: 96px;
-	}
-
-	p {
-		margin: 0 0 10px;
-		padding:0;
-	}
-
-	p.footer {
-		text-align: right;
-		font-size: 11px;
-		border-top: 1px solid #D0D0D0;
-		line-height: 32px;
-		padding: 0 10px 0 10px;
-		margin: 20px 0 0 0;
-	}
-
-	#container {
-		margin: 10px;
-		border: 1px solid #D0D0D0;
-		box-shadow: 0 0 8px #D0D0D0;
-	}
-	</style>
-</head>
-<body>
-
-<div id="container">
-	<h1>Welcome to CodeIgniter!</h1>
-
-	<div id="body">
-		<p>The page you are looking at is being generated dynamically by CodeIgniter.</p>
-
-		<p>If you would like to edit this page you'll find it located at:</p>
-		<code>application/views/welcome_message.php</code>
-
-		<p>The corresponding controller for this page is found at:</p>
-		<code>application/controllers/Welcome.php</code>
-
-		<p>If you are exploring CodeIgniter for the very first time, you should start by reading the <a href="userguide3/">User Guide</a>.</p>
-	</div>
-
-	<p class="footer">Page rendered in <strong>{elapsed_time}</strong> seconds. <?php echo  (ENVIRONMENT === 'development') ?  'CodeIgniter Version <strong>' . CI_VERSION . '</strong>' : '' ?></p>
-</div>
-
-</body>
+                                <li><?php echo anchor("Welcome/post/{$row->id}",$shiv); ?></li>
+                            
+                            </ul>
+                            <?php 
+                    $cnt=$cnt+1;
+                    endforeach;
+                    else:
+                    ?>
+                    <tr>
+                    <td colspan="5" style="color:red; text-align:center">No Record found</td>
+                    </tr>
+                    <?php endif;?>
+                             </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer-->
+   <?php include APPPATH.'views/includes/footer.php';?>
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="<?php echo base_url('assets/js/scripts.js');?>"></script>
+    </body>
 </html>
