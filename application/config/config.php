@@ -23,7 +23,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'http://localhost/MY_project/vaarthaTV';
+$config['base_url'] = 'https://sivacharanveeraghattam.github.io/VaarthaTV/';
 
 /*
 |--------------------------------------------------------------------------
